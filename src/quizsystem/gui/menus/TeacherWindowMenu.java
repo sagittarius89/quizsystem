@@ -3,7 +3,6 @@ package quizsystem.gui.menus;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
-
 import quizsystem.gui.abs.AbstractWindowMenu;
 
 //This class contains temporary code, need to change structure
@@ -18,9 +17,9 @@ public class TeacherWindowMenu extends AbstractWindowMenu {
 		JMenu fileMenu = new JMenu("Plik");
 		
 		JMenuItem newFile = new JMenuItem("Nowy test");
-		JMenuItem openFile = new JMenuItem("Otwórz test");
+		JMenuItem openFile = new JMenuItem("Otwï¿½rz test");
 		JMenuItem saveFile = new JMenuItem("Zapisz test");
-		JMenuItem closeProgram = new JMenuItem("Zakoñcz program");
+		JMenuItem closeProgram = new JMenuItem("Zakoï¿½cz program");
 		
 		fileMenu.add(newFile);
 		fileMenu.add(openFile);

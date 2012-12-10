@@ -1,5 +1,73 @@
 package quizsystem.gui.abs;
 
-abstract public class AbstractController {
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
+import java.lang.reflect.Method;
+
+abstract public class AbstractController implements PropertyChangeListener {
+	protected AbstractModel model;
+	protected AbstractView view;
+
+	public AbstractController() {
+	}
+
+	public void addModel(AbstractModel model) {
+		this.model = model;
+		model.addPropertyChangeListener(this);
+	}
+
+	public void addView(AbstractView view) {
+		this.view = view;
+	}
+
+	public AbstractModel getModel() {
+		return model;
+	}
+
+	public AbstractView getView() {
+		return view;
+	}
+
+	public void propertyChange(PropertyChangeEvent evt) {
+		view.modelPropertyChange(evt);
+	}
+
+	protected void setModelProperty(String propertyName, Object newValue) {
+		try {
+			Method method = model.getClass().getMethod("set" + propertyName, new Class[] { newValue.getClass() });
+			method.invoke(model, newValue);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	protected void setModelProperty(String propertyName, Integer idx, Object newValue) {
+		try {
+			Method method = model.getClass().getMethod("set" + propertyName, new Class[] {Integer.class, newValue.getClass() });
+			method.invoke(model, idx, newValue);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	protected void setModelProperty(String propertyName, Object newValue1, Object newValue2) {
+		try {
+			Method method = model.getClass().getMethod("set" + propertyName, new Class[] { newValue1.getClass(), 
+					newValue2.getClass()});
+			method.invoke(model, newValue1, newValue2);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	protected void setModelProperty(String propertyName, Object newValue1, Object newValue2, Object newValue3) {
+		try {
+			Method method = model.getClass().getMethod("set" + propertyName, new Class[] { newValue1.getClass(), 
+					newValue2.getClass(), newValue3.getClass() });
+			method.invoke(model, newValue1, newValue2, newValue3);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 }
