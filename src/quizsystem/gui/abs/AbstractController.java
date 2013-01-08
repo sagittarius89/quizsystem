@@ -30,7 +30,7 @@ abstract public class AbstractController implements PropertyChangeListener {
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
-		view.modelPropertyChange(evt);
+		view.propertyChange(evt);
 	}
 
 	protected void setModelProperty(String propertyName, Object newValue) {
@@ -66,6 +66,24 @@ abstract public class AbstractController implements PropertyChangeListener {
 			Method method = model.getClass().getMethod("set" + propertyName, new Class[] { newValue1.getClass(), 
 					newValue2.getClass(), newValue3.getClass() });
 			method.invoke(model, newValue1, newValue2, newValue3);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	protected void addModelProperty(String propertyName, Object newValue) {
+		try {
+			Method method = model.getClass().getMethod("add" + propertyName, new Class[] { newValue.getClass() });
+			method.invoke(model, newValue);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	protected void removeModelProperty(String propertyName, Object id) {
+		try {
+			Method method = model.getClass().getMethod("remove" + propertyName, new Class[] { id.getClass() });
+			method.invoke(model, id);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

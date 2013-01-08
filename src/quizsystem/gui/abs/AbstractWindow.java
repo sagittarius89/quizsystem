@@ -19,6 +19,9 @@ public abstract class AbstractWindow extends JFrame{
 	//List of panels in current window
 	protected List<AbstractPanel> panels;
 	
+	protected AbstractModel model;
+	protected AbstractController controller;
+	
 	public static final Color BACKGROUND_COLOR = new Color(217, 217, 217);
 	public static final int MINIMUM_WIDTH = 500;
 	public static final int MINIMUM_HEIGHT = 500;
@@ -40,6 +43,24 @@ public abstract class AbstractWindow extends JFrame{
 	public void setTitle(String title) {
 		this.title = "QuizSystem " + title;
 		super.setTitle(this.title);
+	}
+	
+	public AbstractModel getModel() {
+		return model;
+	}
+	
+	public AbstractController getController() {
+		return controller;
+	}
+	
+	public void addPanel(AbstractPanel panel) {
+		panels.add(panel);
+		model.addPropertyChangeListener(panel.getView());
+	}
+	
+	public void removePanel(AbstractPanel panel) {
+		panels.remove(panel);
+		model.removePropertyChangeListener(panel.getView());
 	}
 	
 	abstract public void init();

@@ -1,7 +1,10 @@
 package quizsystem.gui.abs;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public abstract class AbstractView {
-	public abstract void modelPropertyChange(PropertyChangeEvent evt);
+import javax.swing.JPanel;
+
+public abstract class AbstractView extends JPanel implements PropertyChangeListener{
+
 }
