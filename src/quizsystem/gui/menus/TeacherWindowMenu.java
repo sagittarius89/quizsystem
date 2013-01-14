@@ -1,9 +1,13 @@
 package quizsystem.gui.menus;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import quizsystem.gui.abs.AbstractWindowMenu;
+import quizsystem.gui.windows.addquestion.AddQuestionWizardWindow;
 
 //This class contains temporary code, need to change structure
 public class TeacherWindowMenu extends AbstractWindowMenu {
@@ -14,12 +18,32 @@ public class TeacherWindowMenu extends AbstractWindowMenu {
 	private static final long serialVersionUID = 1L;
 
 	public TeacherWindowMenu() {
-		JMenu fileMenu = new JMenu("Plik");
+		JMenu fileMenu = new JMenu("File");
 		
-		JMenuItem newFile = new JMenuItem("Nowy test");
-		JMenuItem openFile = new JMenuItem("Otw�rz test");
-		JMenuItem saveFile = new JMenuItem("Zapisz test");
-		JMenuItem closeProgram = new JMenuItem("Zako�cz program");
+		JMenuItem newFile = new JMenuItem("New test");
+		JMenuItem openFile = new JMenuItem("Open test");
+		JMenuItem saveFile = new JMenuItem("Save test");
+		JMenuItem closeProgram = new JMenuItem("Close");
+		
+		JMenu testMenu = new JMenu("Test");
+		
+		JMenuItem questionWizard = new JMenuItem("Add question wizard");
+		
+		newFile.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		questionWizard.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AddQuestionWizardWindow window = new AddQuestionWizardWindow();
+			}
+		});
 		
 		fileMenu.add(newFile);
 		fileMenu.add(openFile);
@@ -27,7 +51,10 @@ public class TeacherWindowMenu extends AbstractWindowMenu {
 		fileMenu.add(new JSeparator());
 		fileMenu.add(closeProgram);
 		
+		testMenu.add(questionWizard);
+		
 		subMenus.add(fileMenu);	
+		subMenus.add(testMenu);
 		
 		createMenu();
 	}

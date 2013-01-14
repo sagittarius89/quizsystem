@@ -1,16 +1,17 @@
 package quizsystem.gui.windows.addquestion.view;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.beans.PropertyChangeEvent;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import quizsystem.gui.abs.AbstractView;
@@ -31,8 +32,7 @@ abstract public class AddQuestionViewAbstract extends AbstractView {
 	protected JTextArea questionTextArea;
 	protected JButton uploadImageButton;
 	protected ShowImagePanel showImagePanel;
-	protected JButton cancelButton;
-	protected JButton createButton;
+	protected JPanel answerPanel;
 	
 	protected class ShowImagePanel extends JPanel {
 		/**
@@ -68,40 +68,54 @@ abstract public class AddQuestionViewAbstract extends AbstractView {
 		this.model = model;
 		this.controller = controller;
 	
-		this.setLayout(new BorderLayout());
-		this.setPreferredSize(new Dimension(500, 300));
+		this.setLayout(new GridBagLayout());
 		
 		initPanels();
 		addListeners();
 	}
 	
 	private void initPanels() {
-		//Question text
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 10;
+		gbc.weighty = 10;
 		
-		JPanel upperPanel = new JPanel();
-		upperPanel.setLayout(new BoxLayout(upperPanel, BoxLayout.Y_AXIS));
+		gbc.gridwidth = 3;
 		
-		upperPanel.add(new JLabel("Text of question"));
-		upperPanel.add(questionTextArea = new JTextArea());
+		this.add(new JLabel("Text of question"), gbc);
 		
+		gbc.gridy = 1;
 		
-		//Image Panel
-		JPanel rightPanel = new JPanel();
-		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+		JScrollPane questionTextScrollPane = new JScrollPane(questionTextArea = new JTextArea());
+		this.add(questionTextScrollPane, gbc);
+		questionTextScrollPane.setPreferredSize(new Dimension(500, 70));
 		
-		rightPanel.add(uploadImageButton = new JButton("Upload image"));
-		rightPanel.add(showImagePanel = new ShowImagePanel());
+		gbc.gridy = 2;
 		
-		//Buttons bar
-		JPanel buttonsBar = new JPanel();
-		buttonsBar.setLayout(new FlowLayout());
+		this.add(new JLabel("Answer key"), gbc);
 		
-		buttonsBar.add(cancelButton = new JButton("Cancel"));
-		buttonsBar.add(createButton = new JButton("Create"));
+		gbc.gridwidth = 1;
+		gbc.gridheight = 2;
+		gbc.gridy = 3;
 		
-		this.add(upperPanel, BorderLayout.PAGE_START);
-		this.add(rightPanel, BorderLayout.LINE_END);
-		this.add(buttonsBar, BorderLayout.PAGE_END);
+		this.add(answerPanel = new JPanel(), gbc);
+		
+		gbc.gridheight = 1;
+		gbc.gridwidth = 1;
+		gbc.gridx = 2;
+		
+		this.add(uploadImageButton = new JButton("Upload image"), gbc);
+
+		gbc.gridy = 4;
+		
+		this.add(showImagePanel = new ShowImagePanel(), gbc);
+		
+		showImagePanel.setPreferredSize(new Dimension(100, 100));
+		uploadImageButton.setPreferredSize(new Dimension(150, 20));
+		
+		showImagePanel.setBackground(Color.WHITE);
 	}
 	
 	private void addListeners() {

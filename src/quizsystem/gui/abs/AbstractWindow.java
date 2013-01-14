@@ -2,6 +2,7 @@ package quizsystem.gui.abs;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -34,6 +35,7 @@ public abstract class AbstractWindow extends JFrame{
 		setMinimumSize(new Dimension(MINIMUM_WIDTH, MINIMUM_HEIGHT));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle(title);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		init();
 		pack();
