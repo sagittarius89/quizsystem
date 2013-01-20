@@ -6,15 +6,21 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import quizsystem.gui.abs.AbstractView;
+import quizsystem.gui.abs.TextFieldValidator;
 import quizsystem.gui.windows.addquestion.controller.AddQuestionControllerAbstract;
 import quizsystem.gui.windows.addquestion.model.AddQuestionModelAbstract;
 
@@ -33,6 +39,7 @@ abstract public class AddQuestionViewAbstract extends AbstractView {
 	protected JButton uploadImageButton;
 	protected ShowImagePanel showImagePanel;
 	protected JPanel answerPanel;
+	protected JTextField pointsField;
 	
 	protected class ShowImagePanel extends JPanel {
 		/**
@@ -50,16 +57,21 @@ abstract public class AddQuestionViewAbstract extends AbstractView {
 		
 		public void paintComponent(Graphics g) {
 			if(image != null)
-				g.drawImage(image, 0, 0, 200, 200, this);
+				g.drawImage(image, 0, 0, 150, 150, this);
 		}
 		
 		public void setImage(Image image) {
 			this.image = image;
+			this.repaint();
 		}
 		
 		public Image getImage() {
 			return image;
 		}
+	}
+	
+	protected JPanel getThis() {
+		return this;
 	}
 	
 	public AddQuestionViewAbstract(AddQuestionControllerAbstract controller, 
@@ -97,7 +109,7 @@ abstract public class AddQuestionViewAbstract extends AbstractView {
 		this.add(new JLabel("Answer key"), gbc);
 		
 		gbc.gridwidth = 1;
-		gbc.gridheight = 2;
+		gbc.gridheight = 4;
 		gbc.gridy = 3;
 		
 		this.add(answerPanel = new JPanel(), gbc);
@@ -112,19 +124,73 @@ abstract public class AddQuestionViewAbstract extends AbstractView {
 		
 		this.add(showImagePanel = new ShowImagePanel(), gbc);
 		
-		showImagePanel.setPreferredSize(new Dimension(100, 100));
+		gbc.gridy = 5;
+		
+		this.add(new JLabel("Points count"), gbc);
+		
+		gbc.gridy = 6;
+		
+		this.add(pointsField = new JTextField(10), gbc);
+		
+		showImagePanel.setPreferredSize(new Dimension(150, 150));
 		uploadImageButton.setPreferredSize(new Dimension(150, 20));
 		
 		showImagePanel.setBackground(Color.WHITE);
 	}
 	
 	private void addListeners() {
+		questionTextArea.getDocument().addDocumentListener(new TextFieldValidator() {
+			
+			@Override
+			public void validate() {
+				controller.setQuestionText(questionTextArea.getText());
+			}
+		});
 		
+		uploadImageButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser chooser = new JFileChooser();
+				int result = chooser.showOpenDialog(getThis());
+				
+				if(result == JFileChooser.APPROVE_OPTION) {
+					Image image = (Image)Toolkit.getDefaultToolkit().getImage(chooser.getSelectedFile().getPath());
+					controller.setImage(image);
+				}
+			}
+		});
+		
+		pointsField.getDocument().addDocumentListener(new TextFieldValidator() {
+			
+			@Override
+			public void validate() {
+				try {
+					Integer i = Integer.parseInt(pointsField.getText());
+					controller.setPoints(i);
+					pointsField.setBackground(Color.GREEN);
+				} catch (NumberFormatException e) {
+					pointsField.setBackground(Color.RED);
+				}
+			
+			}
+		});
 	}
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		
+		String n=evt.getPropertyName();
+		try {
+			if(n.equals(AddQuestionControllerAbstract.QUESTION_TEXT)) {
+				questionTextArea.setText((String)evt.getNewValue());
+			} else if (n.equals(AddQuestionControllerAbstract.IMAGE)) {
+				showImagePanel.setImage((Image)evt.getNewValue());
+			} else if (n.equals(AddQuestionControllerAbstract.POINTS)) {
+				pointsField.setText(evt.getNewValue() + "");
+			}
+		} catch (Exception e) {
+			
+		}
 	}
 
 }

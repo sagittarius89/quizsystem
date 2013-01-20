@@ -6,7 +6,9 @@ import java.beans.PropertyChangeSupport;
 
 public class AbstractModel {
 	protected PropertyChangeSupport propertyChangeSupport;
-
+	
+	public static final String PROPERTY_ADDED = "PropertyAdded";
+	public static final String PROPERTY_REMOVED = "PropertyRemoved";
     public AbstractModel()
     {
         propertyChangeSupport = new PropertyChangeSupport(this);
@@ -25,10 +27,14 @@ public class AbstractModel {
     }
     
     protected void firePropertyAdded(String propertyName, Object newValue) {
-    	propertyChangeSupport.firePropertyChange(propertyName, new Object(), newValue);
+    	propertyChangeSupport.firePropertyChange(propertyName, PROPERTY_ADDED, newValue);
     }
     
     protected void firePropertyRemoved(String propertyName, Object oldValue) {
-    	propertyChangeSupport.firePropertyChange(propertyName, oldValue, new Object());
+    	propertyChangeSupport.firePropertyChange(propertyName, PROPERTY_REMOVED, oldValue);
+    }
+    
+    protected void firePropertySet(String propertyName, Integer i, Object oldValue, Object newValue) {
+    	propertyChangeSupport.fireIndexedPropertyChange(propertyName, i, oldValue, newValue);
     }
 }

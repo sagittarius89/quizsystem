@@ -35,7 +35,7 @@ abstract public class AbstractController implements PropertyChangeListener {
 
 	protected void setModelProperty(String propertyName, Object newValue) {
 		try {
-			Method method = model.getClass().getMethod("set" + propertyName, new Class[] { newValue.getClass() });
+			Method method = model.getClass().getMethod("set" + propertyName, new Class[] { newValue.getClass()});
 			method.invoke(model, newValue);
 		} catch (Exception ex) {
 			ex.printStackTrace();

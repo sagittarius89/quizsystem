@@ -111,6 +111,7 @@ public class AddQuestionWizardWindow extends AbstractModalWindow{
 			break;
 		case 1:
 			this.stage = SINGLE_ANSWER_TEST;
+			questionEditPanel = new SingleChoiceTestPanel();
 			break;
 		case 2:
 			this.stage = MULTI_ANSWER_TEST;
