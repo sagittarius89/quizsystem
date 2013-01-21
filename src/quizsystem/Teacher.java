@@ -2,13 +2,14 @@ package quizsystem;
 
 import quizsystem.gui.TeacherWindow;
 import quizsystem.gui.abs.AbstractWindow;
+import quizsystem.gui.controller.TeacherController;
+import quizsystem.gui.model.TeacherModel;
 import quizsystem.types.Test;
 
 public class Teacher {
 	private static Teacher teacher;
 	
-	private AbstractWindow gui;	
-	private Test test;
+	private AbstractWindow gui;
 	
 	
 	public Teacher() {
@@ -39,8 +40,12 @@ public class Teacher {
 		//todo
 	}
 	
-	public Test getTest() {
-		return this.test;
+	public TeacherModel getModel() {
+		return (TeacherModel)gui.getModel();
+	}
+	
+	public TeacherController getController() {
+		return (TeacherController)gui.getController();
 	}
 	
 	public static Teacher getInstance() {

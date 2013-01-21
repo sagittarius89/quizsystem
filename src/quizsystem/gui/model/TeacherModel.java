@@ -11,6 +11,10 @@ import quizsystem.types.Test;
 public class TeacherModel extends AbstractModel{
 	private Test test;
 	
+	public TeacherModel() {
+		test = new Test();
+	}
+	
 	public void setName(String name) {
 		String oldValue = test.getName();
 		test.setName(name);

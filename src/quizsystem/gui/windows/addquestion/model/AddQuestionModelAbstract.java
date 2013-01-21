@@ -26,4 +26,8 @@ abstract public class AddQuestionModelAbstract extends AbstractModel{
 		question.setPoints(points);
 		firePropertyChange(AddQuestionControllerAbstract.POINTS, oldValue, points);
 	}
+	
+	public AbstractQuestion getQuestion() {
+		return question;
+	}
 }

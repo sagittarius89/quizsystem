@@ -6,10 +6,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.text.AbstractDocument.Content;
 
+import quizsystem.Teacher;
 import quizsystem.gui.abs.AbstractModalWindow;
 import quizsystem.gui.abs.AbstractPanel;
 import quizsystem.gui.abs.AbstractWindow;
+import quizsystem.gui.windows.addquestion.model.AddQuestionModelAbstract;
 import quizsystem.gui.windows.addquestion.model.QuestionTypeChoiceModel;
+import quizsystem.types.AbstractQuestion;
 
 public class AddQuestionWizardWindow extends AbstractModalWindow{
 	public static final String CHOICE_QUESTION = "ChoiceQuestion";
@@ -91,7 +94,12 @@ public class AddQuestionWizardWindow extends AbstractModalWindow{
 	}
 	
 	private void create() {
-		
+		AbstractQuestion question = 
+				((AddQuestionModelAbstract)questionEditPanel.getModel())
+				.getQuestion();
+		Teacher.getInstance().getModel().addQuestion(question);
+		this.setVisible(false);
+		this.dispose();
 	}
 
 	private void next() {
