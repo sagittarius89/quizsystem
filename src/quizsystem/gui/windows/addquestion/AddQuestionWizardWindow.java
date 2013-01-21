@@ -123,6 +123,7 @@ public class AddQuestionWizardWindow extends AbstractModalWindow{
 			break;
 		case 2:
 			this.stage = MULTI_ANSWER_TEST;
+			questionEditPanel = new MultipleChoiceTestPanel();
 			break;
 		}
 		
