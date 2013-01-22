@@ -41,8 +41,12 @@ public class TeacherWindow extends AbstractWindow {
 		
 		previewPanel = new PreviewPanel((TeacherModel)model, (TeacherController)controller);
 		JPanel panel2 = new JPanel();
+		JPanel panel1 = new JPanel();
+		panel1.setLayout(new FlowLayout());
+		panel1.add(previewPanel.getView());
+		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, 
-				previewPanel.getView(), panel2);
+				panel2, panel1);
 		
 		this.addPanel(previewPanel);
 		this.add(splitPane);

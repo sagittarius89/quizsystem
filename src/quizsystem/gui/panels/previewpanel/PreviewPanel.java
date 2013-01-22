@@ -10,7 +10,7 @@ public class PreviewPanel extends AbstractPanel {
 	public PreviewPanel(AbstractModel model, AbstractController controller) {
 		this.model = model;
 		this.controller = controller;
-		view = new PreviewView();
+		view = new PreviewView(model);
 	}
 	
 }

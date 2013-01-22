@@ -98,6 +98,7 @@ public class AddQuestionWizardWindow extends AbstractModalWindow{
 				((AddQuestionModelAbstract)questionEditPanel.getModel())
 				.getQuestion();
 		Teacher.getInstance().getModel().addQuestion(question);
+		Teacher.getInstance().getModel().setDisplayedQuestion(0);
 		this.setVisible(false);
 		this.dispose();
 	}

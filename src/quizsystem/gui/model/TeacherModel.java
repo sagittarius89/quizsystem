@@ -10,9 +10,15 @@ import quizsystem.types.Test;
 
 public class TeacherModel extends AbstractModel{
 	public Test test;
-	
+
 	public TeacherModel() {
 		test = new Test();
+	}
+	
+	public void setDisplayedQuestion(Integer id) {
+		Integer oldValue = displayedQuestion;
+		this.displayedQuestion = id;
+		firePropertyChange(TeacherController.DISPLAYED_QUESTION, oldValue, id);
 	}
 	
 	public void setName(String name) {

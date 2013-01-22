@@ -10,4 +10,5 @@ public class TeacherController extends AbstractController{
 	public static final String TEST_TIME = "TestTime";
 	public static final String QUESTIONS = "Questions";
 	public static final String QUESTION = "Question";
+	public static final String DISPLAYED_QUESTION = "DisplayedQuestion";
 }

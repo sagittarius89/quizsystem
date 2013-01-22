@@ -18,7 +18,8 @@ abstract public class AbstractController implements PropertyChangeListener {
 	}
 
 	public void addView(AbstractView view) {
-		this.view = view;
+		if(view!=null)
+			this.view = view;
 	}
 
 	public AbstractModel getModel() {
@@ -30,7 +31,8 @@ abstract public class AbstractController implements PropertyChangeListener {
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
-		view.propertyChange(evt);
+		if(view!=null)
+			view.propertyChange(evt);
 	}
 
 	protected void setModelProperty(String propertyName, Object newValue) {
