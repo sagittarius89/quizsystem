@@ -17,6 +17,7 @@ import quizsystem.gui.abs.AbstractView;
 import quizsystem.gui.controller.TeacherController;
 import quizsystem.gui.model.TeacherModel;
 import quizsystem.types.AbstractQuestion;
+import quizsystem.types.MultipleChoiceTestQuestion;
 import quizsystem.types.OpenQuestion;
 import quizsystem.types.SingleChoiceTestQuestion;
 
@@ -30,6 +31,7 @@ public class PreviewView extends AbstractView {
 	private static final Font font =new Font("Serif", Font.PLAIN, 20);
 	private JTextArea questionArea;
 	private JTextArea answerArea;
+	private int id=0;
 	
 	private ArrayList<JRadioButton> answerButtons;
 	private ButtonGroup answerButtonGroup;
@@ -38,8 +40,6 @@ public class PreviewView extends AbstractView {
 	
 	private static final int WIDTH = 500;
 	private static final int HEIGHT = 500;
-	private static final int HORIZ_MARGIN = WIDTH / 20;
-	private static final int VERT_MARGIN = HEIGHT / 20;
 	
 	public PreviewView(TeacherModel model) {
 		this.model = model;
@@ -76,7 +76,6 @@ public class PreviewView extends AbstractView {
 				drawString(g, q.getKey(), 30, 200, 460, 300);
 			} else {
 				drawString(g, q.getKey(), 30, 200, 300, 300);
-				g.drawImage(q.getImage(), 300, 200, 150, 150, this);
 			}
 		} else if(question instanceof SingleChoiceTestQuestion) {
 			SingleChoiceTestQuestion q = (SingleChoiceTestQuestion)question;
@@ -87,21 +86,45 @@ public class PreviewView extends AbstractView {
 			int separator = 300 / q.getAnswers().size();
 			
 			for(String answer: q.getAnswers()) {
-				g.fillArc(30, cheight - 7, 6, 6, 0, 360);
-				
 				if(q.getAnswers().get(q.getKey()) == answer)
 					g.setColor(Color.GREEN);
 				else
 					g.setColor(Color.BLACK);
-				
+				g.fillArc(30, cheight - 7, 6, 6, 0, 360);
 				drawString(g, answer, 40, cheight, width, separator);
 				cheight += separator;
 			}
-			
-			
 			g.setColor(Color.BLACK);
-			g.drawImage(q.getImage(), 300, 200, 150, 150, this);
+		} else if(question instanceof MultipleChoiceTestQuestion) {
+			MultipleChoiceTestQuestion q = (MultipleChoiceTestQuestion)question;
+			g.setFont(new Font("Arial", Font.PLAIN, 14));
+			
+			int cheight = 200;
+			int width = q.getImage() == null ? 300 : 460;
+			int separator = 300 / q.getAnswers().size();
+			
+			for(int i=0; i<q.getAnswers().size(); i++) {
+				String answer = q.getAnswers().get(i);
+				if(q.getKeys().get(i)) {
+					g.setColor(Color.GREEN);
+					g.fillRect(30, cheight - 7, 6, 6);
+				} else {
+					g.setColor(Color.BLACK);
+					g.drawRect(30, cheight - 7, 6, 6);
+				}
+				drawString(g, answer, 40, cheight, width, separator);
+				cheight += separator;
+			}
 		}
+		
+		g.drawImage(question.getImage(), 300, 200, 150, 150, this);
+		
+		g.setColor(Color.RED);
+		g.setFont(new Font("Arial", Font.PLAIN, 20));
+		g.drawString("Max points: " + question.getPoints(), 350, 490);
+		g.setFont(new Font("Arial", Font.PLAIN, 12));
+		g.setColor(Color.GRAY);
+		g.drawString(this.id + 1 + "", 20, 490);
 	}
 	
 	private void drawString(Graphics g, String s, int x, int y, int width, int height) {
@@ -142,7 +165,7 @@ public class PreviewView extends AbstractView {
 		String n = arg0.getPropertyName();
 		
 		if(n.equals(TeacherController.DISPLAYED_QUESTION)) {
-			Integer id = (Integer)arg0.getNewValue();
+			this.id = (Integer)arg0.getNewValue();
 			this.question = model.getQuestionAt(id);
 			this.repaint();
 		}
