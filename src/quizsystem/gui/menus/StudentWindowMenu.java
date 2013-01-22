@@ -9,6 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
+import quizsystem.Student;
 import quizsystem.Teacher;
 import quizsystem.gui.abs.AbstractWindowMenu;
 
@@ -23,20 +24,36 @@ public class StudentWindowMenu extends AbstractWindowMenu {
 		JMenuItem saveFile = new JMenuItem("Save test file");
 		JMenuItem closeProgram = new JMenuItem("Close");
 		
-		openFile.addActionListener(new ActionListener() {
-			
+		openFile.addActionListener(new ActionListener() {	
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser dialog = new JFileChooser();
 				int result = dialog.showOpenDialog(fileMenu);
+				if(result == JFileChooser.APPROVE_OPTION) {
+					Student.getInstance()
+						.loadTest(dialog.getSelectedFile().getPath());
+				}
 			}
 		});
 		
 		saveFile.addActionListener(new ActionListener() {
 			
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+				JFileChooser dialog = new JFileChooser();
+				int result = dialog.showSaveDialog(fileMenu);
+				if(result == JFileChooser.APPROVE_OPTION) {
+					Student.getInstance()
+						.saveTest(dialog.getSelectedFile().getPath());
+				}
+			}
+		});
+		
+		closeProgram.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				System.exit(0);
 			}
 		});
 		

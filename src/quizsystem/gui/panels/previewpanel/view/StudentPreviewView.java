@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
@@ -38,6 +39,9 @@ public class StudentPreviewView extends AbstractView {
 	private JTextArea questionArea;
 	private JTextArea answerArea;
 	private JTextArea downArea;
+	
+	private JButton nextButton;
+	private JButton prevButton;
 	
 	private ArrayList<JRadioButton> answerButtons;
 	private ButtonGroup answerButtonGroup;
@@ -78,10 +82,9 @@ public class StudentPreviewView extends AbstractView {
 			answerArea.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 			answerArea.setPreferredSize(new Dimension(WIDTH - 2 * HORIZ_MARGIN, 100));
 			
-			//Nie mam pojecia jak zrobic, zeby sie nie fillowalo do konca, wiec robie kaszanokod tutaj, cz. 1.:
-			downArea = new JTextArea();
-			downArea.setPreferredSize(new Dimension(WIDTH - 2 * HORIZ_MARGIN, VERT_MARGIN));
-			downArea.setEnabled(false);
+			//Brzydkie guziki:
+			nextButton = new JButton("Next question");
+			prevButton = new JButton("Previous question");
 		}
 		//Test jednokrotnego wyboru:
 		else if (question instanceof SingleChoiceTestQuestion) {
@@ -127,21 +130,11 @@ public class StudentPreviewView extends AbstractView {
 				});
 			}
 			
-			GridBagConstraints c1 = new GridBagConstraints();
-			c1.weighty = 0.8;
-			c1.fill = GridBagConstraints.VERTICAL;
-			c1.ipadx = -HORIZ_MARGIN;
-			c1.gridy = 1;
-			
-			add(answerArea,c1);
-			
-			//Nie mam pojecia jak zrobic, zeby sie nie fillowalo do konca, wiec robie kaszanokod tutaj, cz. 2.:
-			GridBagConstraints c2 = new GridBagConstraints();
-			c2.weighty = 0.05;
-			c2.fill = GridBagConstraints.VERTICAL;
-			c2.gridy = 2;
-			add(downArea, c2);
-
+			c.weighty = 0.8;
+			c.fill = GridBagConstraints.VERTICAL;
+			c.ipadx = -HORIZ_MARGIN;
+			c.gridy = 1;
+			add(answerArea,c);
 		}
 		//Test jednokrotnego wyboru:
 		else if (question instanceof SingleChoiceTestQuestion) {
@@ -178,6 +171,15 @@ public class StudentPreviewView extends AbstractView {
 				add(temp_check, c1);
 			}
 		}
+		
+		c.ipadx = 0;
+		c.weighty=0.05;
+		c.gridy = 2;
+		add(prevButton, c);
+		
+		c.gridy = 3;
+		nextButton.setPreferredSize(prevButton.getPreferredSize());
+		add(nextButton, c);
 		
 		setIgnoreRepaint(false);
 		repaint();

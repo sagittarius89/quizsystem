@@ -18,6 +18,7 @@ import quizsystem.gui.controller.TeacherController;
 import quizsystem.gui.model.TeacherModel;
 import quizsystem.types.AbstractQuestion;
 import quizsystem.types.OpenQuestion;
+import quizsystem.types.SingleChoiceTestQuestion;
 
 public class PreviewView extends AbstractView {
 

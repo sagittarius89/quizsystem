@@ -13,6 +13,7 @@ import quizsystem.gui.controller.TeacherController;
 import quizsystem.gui.menus.TeacherWindowMenu;
 import quizsystem.gui.panels.previewpanel.PreviewPanel;
 import quizsystem.gui.abs.AbstractPanel;
+import quizsystem.types.OpenQuestion;
 
 public class TeacherWindow extends AbstractWindow {
 	
@@ -38,6 +39,8 @@ public class TeacherWindow extends AbstractWindow {
 		controller.addModel(model);
 		
 		setJMenuBar(windowMenu);
+		
+		((TeacherModel) model).addQuestion(new OpenQuestion("jakieś pytanie, żeby się nie wysypywało"));
 		
 		previewPanel = new PreviewPanel((TeacherModel)model, (TeacherController)controller);
 		JPanel panel2 = new JPanel();

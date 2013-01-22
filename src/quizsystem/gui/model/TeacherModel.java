@@ -9,7 +9,7 @@ import quizsystem.types.AbstractQuestion;
 import quizsystem.types.Test;
 
 public class TeacherModel extends AbstractModel{
-	public Test test;
+	private Test test;
 	private Integer displayedQuestion;
 	public TeacherModel() {
 		test = new Test();
@@ -36,15 +36,16 @@ public class TeacherModel extends AbstractModel{
 	public void setTest(Test test) {
 		this.setAuthor(test.getAuthor());
 		this.setCreateTime(test.getCreateTime());
-		this.setDisplayedQuestion(test.getQuestions().size());
+		this.setDisplayedQuestion(test.getQuestions().size()-1);
 		this.setName(test.getName());
 		this.setStartTime(test.getStartTime());
 		this.setTestTime(this.getTestTime());
-		for(AbstractQuestion q: this.test.getQuestions())
-			this.test.removeQuestion(q);
 		
-		for(AbstractQuestion q: test.getQuestions())
+		//TODO: Nie ominmy eventów przy usuwaniu (jesli sie tam pojawia).
+		this.test.getQuestions().clear();		
+		for(AbstractQuestion q: test.getQuestions()) {
 			this.test.addQuestion(q);
+		}
 		
 		this.test = test;
 	}

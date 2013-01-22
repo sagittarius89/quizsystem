@@ -10,11 +10,39 @@ import quizsystem.types.Test;
 
 public class StudentModel extends AbstractModel {
 	private Test test;
+	private Integer displayedQuestion;
 	
 	public StudentModel() {
 		test = new Test();
 	}
 	
+	public Test getTest() {
+		return this.test;
+	}
+	
+	public void setTest(Test test) {
+		this.setAuthor(test.getAuthor());
+		this.setCreateTime(test.getCreateTime());
+		this.setDisplayedQuestion(test.getQuestions().size()-1);
+		this.setName(test.getName());
+		this.setStartTime(test.getStartTime());
+		this.setTestTime(this.getTestTime());
+		
+		//TODO: Nie ominmy eventów przy usuwaniu (jesli sie tam pojawia).
+		this.test.getQuestions().clear();		
+		for(AbstractQuestion q: test.getQuestions()) {
+			this.test.addQuestion(q);
+		}
+		
+		this.test = test;
+	}
+	
+	public void setDisplayedQuestion(Integer id) {
+		Integer oldValue = displayedQuestion;
+		this.displayedQuestion = id;
+		firePropertyChange(StudentController.DISPLAYED_QUESTION, oldValue, id);
+	}
+
 	public void setName(String name) {
 		String oldValue = test.getName();
 		test.setName(name);

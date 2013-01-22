@@ -48,7 +48,7 @@ public class Teacher {
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			
 			getModel().setTest((Test) jaxbUnmarshaller.unmarshal(file));
-	 
+			
 		  } catch (JAXBException e) {
 			e.printStackTrace();
 		  }
@@ -59,7 +59,7 @@ public class Teacher {
 			File file = new File(path);
 
 			//Tu jest brzydko:
-			Test test = getModel().test;
+			Test test = getModel().getTest();
 			JAXBContext jaxbContext = JAXBContext.newInstance(Test.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 		 
@@ -67,7 +67,7 @@ public class Teacher {
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		 
 			jaxbMarshaller.marshal(test, file);
-				 
+			 
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}

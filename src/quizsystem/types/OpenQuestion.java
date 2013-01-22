@@ -6,6 +6,10 @@ public class OpenQuestion extends AbstractQuestion{
 	private int maxLength;
 	private String key;
 	
+	public OpenQuestion() {
+		this("");
+	}
+	
 	public OpenQuestion(String question) {
 		super(question);
 		maxLength=0;
