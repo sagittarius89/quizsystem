@@ -7,10 +7,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import quizsystem.gui.model.TeacherModel;
 import quizsystem.gui.abs.AbstractWindow;
 import quizsystem.gui.controller.TeacherController;
 import quizsystem.gui.menus.TeacherWindowMenu;
-import quizsystem.gui.model.TeacherModel;
 import quizsystem.gui.panels.previewpanel.PreviewPanel;
 import quizsystem.gui.abs.AbstractPanel;
 

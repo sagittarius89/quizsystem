@@ -10,7 +10,7 @@ import quizsystem.types.Test;
 
 public class TeacherModel extends AbstractModel{
 	public Test test;
-
+	private Integer displayedQuestion;
 	public TeacherModel() {
 		test = new Test();
 	}

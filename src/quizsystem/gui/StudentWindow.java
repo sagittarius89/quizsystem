@@ -33,7 +33,7 @@ public class StudentWindow extends AbstractWindow {
 		
 		setJMenuBar(windowMenu);
 		
-		previewPanel = new PreviewPanel((StudentModel)model, (StudentController)controller);
+		//previewPanel = new PreviewPanel((StudentModel)model, (StudentController)controller);
 		JPanel panel2 = new JPanel();
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, 
 				previewPanel.getView(), panel2);
