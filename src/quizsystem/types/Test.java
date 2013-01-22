@@ -3,6 +3,12 @@ package quizsystem.types;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
+@XmlRootElement
+@XmlSeeAlso({AbstractQuestion.class, OpenQuestion.class, SingleChoiceTestQuestion.class, MultipleChoiceTestQuestion.class})
 public class Test {
 	private String name;
 	private String author;
@@ -21,6 +27,7 @@ public class Test {
 		return name;
 	}
 
+	@XmlElement
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -29,6 +36,7 @@ public class Test {
 		return author;
 	}
 
+	@XmlElement
 	public void setAuthor(String author) {
 		this.author = author;
 	}
@@ -37,6 +45,7 @@ public class Test {
 		return createTime;
 	}
 
+	@XmlElement
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
@@ -45,6 +54,7 @@ public class Test {
 		return startTime;
 	}
 
+	@XmlElement
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
@@ -53,6 +63,7 @@ public class Test {
 		return testTime;
 	}
 
+	@XmlElement
 	public void setTestTime(Integer testTime) {
 		this.testTime = testTime;
 	}
@@ -61,6 +72,7 @@ public class Test {
 		return questions;
 	}
 
+	@XmlElement
 	public void setQuestions(ArrayList<AbstractQuestion> questions) {
 		this.questions = questions;
 	}

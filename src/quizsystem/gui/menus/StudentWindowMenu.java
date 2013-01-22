@@ -15,16 +15,11 @@ public class StudentWindowMenu extends AbstractWindowMenu {
 	public StudentWindowMenu() {
 		JMenu fileMenu = new JMenu("File");
 		
-		JMenuItem newFile = new JMenuItem("New test");
-		JMenuItem openFile = new JMenuItem("Open test");
-		JMenuItem saveFile = new JMenuItem("Save test");
+		JMenuItem openFile = new JMenuItem("Open test file");
+		JMenuItem saveFile = new JMenuItem("Save test file");
 		JMenuItem closeProgram = new JMenuItem("Close");
 		
-		JMenu testMenu = new JMenu("Test");
-		
-		JMenuItem questionWizard = new JMenuItem("Add question wizard");
-		
-		newFile.addActionListener(new ActionListener() {
+		openFile.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -32,24 +27,20 @@ public class StudentWindowMenu extends AbstractWindowMenu {
 			}
 		});
 		
-		questionWizard.addActionListener(new ActionListener() {
+		saveFile.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//AddQuestionWizardWindow window = new AddQuestionWizardWindow();
+				
 			}
 		});
 		
-		fileMenu.add(newFile);
 		fileMenu.add(openFile);
 		fileMenu.add(saveFile);
 		fileMenu.add(new JSeparator());
 		fileMenu.add(closeProgram);
 		
-		testMenu.add(questionWizard);
-		
 		subMenus.add(fileMenu);	
-		subMenus.add(testMenu);
 		
 		createMenu();
 	}	

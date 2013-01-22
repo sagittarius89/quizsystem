@@ -9,7 +9,7 @@ import quizsystem.types.AbstractQuestion;
 import quizsystem.types.Test;
 
 public class TeacherModel extends AbstractModel{
-	private Test test;
+	public Test test;
 	
 	public TeacherModel() {
 		test = new Test();
