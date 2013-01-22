@@ -1,42 +1,23 @@
 package quizsystem.gui.panels.previewpanel.view;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineBreakMeasurer;
-import java.awt.font.TextAttribute;
-import java.awt.font.TextLayout;
 import java.beans.PropertyChangeEvent;
-import java.text.AttributedCharacterIterator;
-import java.text.AttributedString;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
-import javax.swing.border.EtchedBorder;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
-
-import quizsystem.gui.abs.AbstractPanel;
 import quizsystem.gui.abs.AbstractView;
 import quizsystem.gui.controller.TeacherController;
 import quizsystem.gui.model.TeacherModel;
 import quizsystem.types.AbstractQuestion;
-import quizsystem.types.MultipleChoiceTestQuestion;
 import quizsystem.types.OpenQuestion;
-import quizsystem.types.SingleChoiceTestQuestion;
 
 public class PreviewView extends AbstractView {
 

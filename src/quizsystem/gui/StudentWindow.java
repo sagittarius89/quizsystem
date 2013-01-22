@@ -1,23 +1,27 @@
 package quizsystem.gui;
 
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import quizsystem.Student;
 import quizsystem.gui.abs.AbstractPanel;
 import quizsystem.gui.abs.AbstractWindow;
 import quizsystem.gui.controller.StudentController;
 import quizsystem.gui.menus.StudentWindowMenu;
 import quizsystem.gui.model.StudentModel;
-import quizsystem.gui.panels.previewpanel.PreviewPanel;
+import quizsystem.gui.panels.previewpanel.StudentPreviewPanel;
+import quizsystem.types.OpenQuestion;
+import quizsystem.types.SingleChoiceTestQuestion;
 
 public class StudentWindow extends AbstractWindow {
 	
 	private static final long serialVersionUID = 1L;
 
 	private StudentWindowMenu windowMenu;
-	private PreviewPanel previewPanel;
+	private StudentPreviewPanel previewPanel;
 	
 	public StudentWindow() {
 		super("Student");
@@ -33,14 +37,20 @@ public class StudentWindow extends AbstractWindow {
 		
 		setJMenuBar(windowMenu);
 		
-		//previewPanel = new PreviewPanel((StudentModel)model, (StudentController)controller);
+		//TODO: usunąć, obsłużyć testy: 
+		((StudentModel) model).addQuestion(new OpenQuestion("jakieś pytanie, żeby się nie wysypywało"));
+		
+		previewPanel = new StudentPreviewPanel((StudentModel)model, (StudentController)controller);
 		JPanel panel2 = new JPanel();
+		JPanel panel1 = new JPanel();
+		panel1.setLayout(new FlowLayout());
+		panel1.add(previewPanel.getView());
+		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, 
-				previewPanel.getView(), panel2);
+				panel2, panel1);
 		
 		this.addPanel(previewPanel);
 		this.add(splitPane);
-		
 	}
 
 	@Override
@@ -48,4 +58,3 @@ public class StudentWindow extends AbstractWindow {
 		System.exit(0);
 	}
 }
-
