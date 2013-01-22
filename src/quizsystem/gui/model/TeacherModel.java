@@ -15,6 +15,40 @@ public class TeacherModel extends AbstractModel{
 		test = new Test();
 	}
 	
+	public Test getTest() {
+		return this.test;
+	}
+	
+	public void newTest() {
+		for(AbstractQuestion q: this.test.getQuestions())
+			this.test.removeQuestion(q);
+		
+		this.test = new Test();
+		this.setAuthor("");
+		this.setCreateTime(new Date());
+		this.setDisplayedQuestion(-1);
+		this.setName("");
+		this.setStartTime(null);
+		this.setTestTime(null);
+		
+	}
+	
+	public void setTest(Test test) {
+		this.setAuthor(test.getAuthor());
+		this.setCreateTime(test.getCreateTime());
+		this.setDisplayedQuestion(test.getQuestions().size());
+		this.setName(test.getName());
+		this.setStartTime(test.getStartTime());
+		this.setTestTime(this.getTestTime());
+		for(AbstractQuestion q: this.test.getQuestions())
+			this.test.removeQuestion(q);
+		
+		for(AbstractQuestion q: test.getQuestions())
+			this.test.addQuestion(q);
+		
+		this.test = test;
+	}
+	
 	public void setDisplayedQuestion(Integer id) {
 		Integer oldValue = displayedQuestion;
 		this.displayedQuestion = id;

@@ -2,6 +2,7 @@ package quizsystem;
 
 import java.io.File;
 
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -34,25 +35,23 @@ public class Teacher {
 		}).start();
 	}
 
+	public void newTest() {
+			getModel().newTest();
+	}
+	
 	public void loadTest(String path) {
 		try {
 			File file = new File(path);
-			
-			//Tu jest brzydko:
-			Test test = getModel().test;
+			getModel();
 			
 			JAXBContext jaxbContext = JAXBContext.newInstance(Test.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			
-			test = (Test) jaxbUnmarshaller.unmarshal(file);
+			getModel().setTest((Test) jaxbUnmarshaller.unmarshal(file));
 	 
 		  } catch (JAXBException e) {
 			e.printStackTrace();
 		  }
-	}
-
-	public void createTest() {
-		// todo
 	}
 
 	public void saveTest(String path) {

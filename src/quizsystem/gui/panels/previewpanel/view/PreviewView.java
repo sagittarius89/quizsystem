@@ -96,8 +96,30 @@ public class PreviewView extends AbstractView {
 				drawString(g, q.getKey(), 30, 200, 300, 300);
 				g.drawImage(q.getImage(), 300, 200, 150, 150, this);
 			}
+		} else if(question instanceof SingleChoiceTestQuestion) {
+			SingleChoiceTestQuestion q = (SingleChoiceTestQuestion)question;
+			g.setFont(new Font("Arial", Font.PLAIN, 14));
+			
+			int cheight = 200;
+			int width = q.getImage() == null ? 300 : 460;
+			int separator = 300 / q.getAnswers().size();
+			
+			for(String answer: q.getAnswers()) {
+				g.fillArc(30, cheight - 7, 6, 6, 0, 360);
+				
+				if(q.getAnswers().get(q.getKey()) == answer)
+					g.setColor(Color.GREEN);
+				else
+					g.setColor(Color.BLACK);
+				
+				drawString(g, answer, 40, cheight, width, separator);
+				cheight += separator;
+			}
+			
+			
+			g.setColor(Color.BLACK);
+			g.drawImage(q.getImage(), 300, 200, 150, 150, this);
 		}
-		
 	}
 	
 	private void drawString(Graphics g, String s, int x, int y, int width, int height) {
