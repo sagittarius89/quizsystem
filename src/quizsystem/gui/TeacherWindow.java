@@ -43,7 +43,7 @@ public class TeacherWindow extends AbstractWindow {
 		
 		setJMenuBar(windowMenu);
 		
-		((TeacherModel) model).addQuestion(new OpenQuestion("jakieś pytanie, żeby się nie wysypywało"));
+		//((TeacherModel) model).addQuestion(new OpenQuestion("jakieś pytanie, żeby się nie wysypywało"));
 		
 		previewPanel = new PreviewPanel((TeacherModel)model, (TeacherController)controller);
 		previewBar = new PreviewBar((TeacherModel)model, (TeacherController)controller);

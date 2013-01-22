@@ -23,7 +23,6 @@ public class StudentModel extends AbstractModel {
 	public void setTest(Test test) {
 		this.setAuthor(test.getAuthor());
 		this.setCreateTime(test.getCreateTime());
-		this.setDisplayedQuestion(test.getQuestions().size()-1);
 		this.setName(test.getName());
 		this.setStartTime(test.getStartTime());
 		this.setTestTime(this.getTestTime());
@@ -35,6 +34,7 @@ public class StudentModel extends AbstractModel {
 		}
 		
 		this.test = test;
+		this.setDisplayedQuestion(0);
 	}
 	
 	public void setDisplayedQuestion(Integer id) {

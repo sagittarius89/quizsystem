@@ -33,75 +33,62 @@ public class StudentPreviewView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
 	private AbstractQuestion question;
-	
+
 	private StudentModel model;
-	private static final Font font =new Font("Serif", Font.PLAIN, 20);
+	private static final Font font = new Font("Serif", Font.PLAIN, 20);
 	private JTextArea questionArea;
 	private JTextArea answerArea;
 	private JTextArea downArea;
-	
+
 	private JButton nextButton;
 	private JButton prevButton;
-	
+
 	private ArrayList<JRadioButton> answerButtons;
 	private ButtonGroup answerButtonGroup;
-	
+
 	private ArrayList<JCheckBox> answerChecks;
-	
+
 	private static final int WIDTH = 500;
 	private static final int HEIGHT = 500;
 	private static final int HORIZ_MARGIN = WIDTH / 20;
 	private static final int VERT_MARGIN = HEIGHT / 20;
-	
+
 	public StudentPreviewView(StudentModel model) {
 		this.model = model;
-		this.question = model.getQuestions().get(0);
+		if (model.getQuestions().size() > 0) {
+			this.question = model.getQuestions().get(0);
+		} else {
+			this.question = new MultipleChoiceTestQuestion();
+		}
 		this.setPreferredSize(new Dimension(WIDTH + 10, HEIGHT + 10));
 		setLayout(new GridBagLayout());
-		
+
 		this.model = model;
 		this.questionArea = new JTextArea();
-		
+
 		questionArea.setFont(font);
 		questionArea.setWrapStyleWord(true);
 		questionArea.setLineWrap(true);
 		questionArea.setEditable(false);
-		
-		//Ustawiamy preferowany (na razie szerokosc, w wysokosci jest byle co):
-		questionArea.setSize(new Dimension(WIDTH - 2 * HORIZ_MARGIN, HEIGHT - 2 * VERT_MARGIN));
-		//Znajdujemy poprawna wysokosc:
+
+		// Ustawiamy preferowany (na razie szerokosc, w wysokosci jest byle co):
+		questionArea.setSize(new Dimension(WIDTH - 2 * HORIZ_MARGIN, HEIGHT - 2
+				* VERT_MARGIN));
+		// Znajdujemy poprawna wysokosc:
 		Dimension pref_size = questionArea.getPreferredSize();
 		questionArea.setSize(pref_size);
 
-		//Pytanie otwarte:
-		if (question instanceof OpenQuestion) {
-			answerArea = new JTextArea();
-			answerArea.setFont(font);
-			answerArea.setWrapStyleWord(true);
-			answerArea.setLineWrap(true);
-			answerArea.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-			answerArea.setPreferredSize(new Dimension(WIDTH - 2 * HORIZ_MARGIN, 100));
-			
-			//Brzydkie guziki:
-			nextButton = new JButton("Next question");
-			prevButton = new JButton("Previous question");
-		}
-		//Test jednokrotnego wyboru:
-		else if (question instanceof SingleChoiceTestQuestion) {
-			answerButtons = new ArrayList<JRadioButton>();
-			answerButtonGroup = new ButtonGroup();
-		}
-		//Test wielokrotnego wyboru:
-		else if (question instanceof MultipleChoiceTestQuestion) {
-			answerChecks = new ArrayList<JCheckBox>();
-		}
+		// Brzydkie guziki:
+		nextButton = new JButton("Next question");
+		prevButton = new JButton("Previous question");
+
 		redraw();
 	}
-	
+
 	public void redraw() {
-		setIgnoreRepaint(true);
+		//setIgnoreRepaint(true);
 		removeAll();
-		
+
 		questionArea.setText(question.getQuestion());
 
 		GridBagConstraints c = new GridBagConstraints();
@@ -110,83 +97,114 @@ public class StudentPreviewView extends AbstractView {
 		c.gridy = 0;
 		add(questionArea, c);
 		
-		//Pytanie otwarte:
+		// Pytanie otwarte:
 		if (question instanceof OpenQuestion) {
-			
-			//Maksymalna liczba znakow (chyba sie nie da prosciej...):
-			final int max_length = ((OpenQuestion)question).getMaxLength();
+			answerArea = new JTextArea();
+			answerArea.setFont(font);
+			answerArea.setWrapStyleWord(true);
+			answerArea.setLineWrap(true);
+			answerArea.setBorder(BorderFactory
+					.createEtchedBorder(EtchedBorder.LOWERED));
+			answerArea.setPreferredSize(new Dimension(WIDTH - 2 * HORIZ_MARGIN,
+					100));
+		}
+		// Test jednokrotnego wyboru:
+		else if (question instanceof SingleChoiceTestQuestion) {
+			answerButtons = new ArrayList<JRadioButton>();
+			answerButtonGroup = new ButtonGroup();
+		}
+		// Test wielokrotnego wyboru:
+		else if (question instanceof MultipleChoiceTestQuestion) {
+			answerChecks = new ArrayList<JCheckBox>();
+		}
+
+		// Pytanie otwarte:
+		if (question instanceof OpenQuestion) {
+
+			// Maksymalna liczba znakow (chyba sie nie da prosciej...):
+			final int max_length = ((OpenQuestion) question).getMaxLength();
 			if (max_length != 0) {
 				answerArea.setDocument(new PlainDocument() {
-	
+
 					private static final long serialVersionUID = 1L;
-	
-					public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-	
-					    if(str == null || answerArea.getText().length() >= max_length) 
-					      return;
-	
-					    super.insertString(offs, str, a);
+
+					public void insertString(int offs, String str,
+							AttributeSet a) throws BadLocationException {
+
+						if (str == null
+								|| answerArea.getText().length() >= max_length)
+							return;
+
+						super.insertString(offs, str, a);
 					}
 				});
 			}
-			
+
 			c.weighty = 0.8;
 			c.fill = GridBagConstraints.VERTICAL;
 			c.ipadx = -HORIZ_MARGIN;
 			c.gridy = 1;
-			add(answerArea,c);
+			add(answerArea, c);
 		}
-		//Test jednokrotnego wyboru:
+		// Test jednokrotnego wyboru:
 		else if (question instanceof SingleChoiceTestQuestion) {
 			int i = 1;
-			for(String answer : ((SingleChoiceTestQuestion) question).getAnswers()) {
+			for (String answer : ((SingleChoiceTestQuestion) question)
+					.getAnswers()) {
 				JRadioButton temp_button = new JRadioButton(answer);
 				temp_button.setFont(font);
 				temp_button.setBackground(Color.white);
 				answerButtons.add(temp_button);
 				answerButtonGroup.add(temp_button);
-				
+
 				GridBagConstraints c1 = new GridBagConstraints();
-				c1.weighty = 0.8 / ((SingleChoiceTestQuestion) question).getAnswers().size();
+				c1.weighty = 0.8 / ((SingleChoiceTestQuestion) question)
+						.getAnswers().size();
 				c1.fill = GridBagConstraints.VERTICAL;
 				c1.gridy = i++;
-						
+
 				add(temp_button, c1);
 			}
 		}
-		//Test wielokrotnego wyboru:
+		// Test wielokrotnego wyboru:
 		else if (question instanceof MultipleChoiceTestQuestion) {
 			int i = 1;
-			for(String answer : ((MultipleChoiceTestQuestion) question).getAnswers()) {
+			for (String answer : ((MultipleChoiceTestQuestion) question)
+					.getAnswers()) {
 				JCheckBox temp_check = new JCheckBox(answer);
 				temp_check.setFont(font);
 				temp_check.setBackground(Color.white);
 				answerChecks.add(temp_check);
-				
+
 				GridBagConstraints c1 = new GridBagConstraints();
-				c1.weighty = 0.8 / ((MultipleChoiceTestQuestion) question).getAnswers().size();
+				c1.weighty = 0.8 / ((MultipleChoiceTestQuestion) question)
+						.getAnswers().size();
 				c1.fill = GridBagConstraints.VERTICAL;
 				c1.gridy = i++;
-				
+
 				add(temp_check, c1);
 			}
 		}
 		
-		c.ipadx = 0;
-		c.weighty=0.05;
-		c.gridy = 2;
-		add(prevButton, c);
-		
-		c.gridy = 3;
-		nextButton.setPreferredSize(prevButton.getPreferredSize());
-		add(nextButton, c);
-		
-		setIgnoreRepaint(false);
+		if (model.getQuestions().size() > 0) {
+			
+			c.ipadx = 0;
+			c.weighty = 0.05;
+			c.gridy = 2;
+			add(prevButton, c);
+
+			c.gridy = 3;
+			nextButton.setPreferredSize(prevButton.getPreferredSize());
+			add(nextButton, c);
+		}
+
+		//setIgnoreRepaint(false);
+		revalidate();
 		repaint();
 	}
 
 	public void paintComponent(Graphics g) {
-		//Nie wiem czemu nie dziala po prostu setBackground, ale kij z tym:
+		// Nie wiem czemu nie dziala po prostu setBackground, ale kij z tym:
 		g.setColor(Color.white);
 		g.fillRect(0, 0, getWidth(), getHeight());
 	}
@@ -198,10 +216,10 @@ public class StudentPreviewView extends AbstractView {
 	@Override
 	public void propertyChange(PropertyChangeEvent arg0) {
 		String n = arg0.getPropertyName();
-		if(n.equals(StudentController.DISPLAYED_QUESTION)) {
-			Integer id = (Integer)arg0.getNewValue();
+		if (n.equals(StudentController.DISPLAYED_QUESTION)) {
+			Integer id = (Integer) arg0.getNewValue();
 			this.question = model.getQuestionAt(id);
 			this.redraw();
-		}	
+		}
 	}
 }
